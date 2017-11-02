@@ -18,7 +18,7 @@ main = do
             in displayPlayerMove n )]
     ctx <- newObject clazz ()
     runEngineLoop defaultEngineConfig {
-        initialDocument = fileDocument "blackjack.qml",
+        initialDocument = fileDocument "mainScrene.qml",
         contextObject = Just $ anyObjRef ctx}
 
 displayPlayerMove :: Integer -> IO ()
