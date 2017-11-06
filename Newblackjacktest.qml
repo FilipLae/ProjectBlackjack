@@ -15,6 +15,23 @@ Rectangle {
 		anchors.fill: parent
 	}
 
+	Rectangle {
+		id: finishedScreen
+		height: 300; width: 800;
+		anchors.centerIn: parent
+		color: "blue"
+		visible: false
+
+		Text {
+			text: "GAME FINISHED \n\n\nClick deal to start a new one!"
+			anchors.centerIn: parent
+			font.pointSize: 20
+			font.bold: true
+			color: "white"
+		}
+		
+	}
+
 	//Dealer (could potentially increase the height and put an array of cards on the display here)
 	//This kind of block will eventually be reformed into a component, to make it easier to create multiple players
 	Rectangle {
@@ -52,8 +69,12 @@ Rectangle {
                                 	} else {
                                         	dealerModel.append({ _id: "./Images/D" + y + ".png" })
                                 	}
+
+				
 					dealerMove.clicked(Qt.LeftButton)
 				}
+				}else{
+					finishedScreen.visible = true
 				}
 			}
 		}
@@ -178,11 +199,13 @@ Rectangle {
 		
 		Text {
 			font.pointSize: 14
-			text: "Deal"; horizontalAlignment: Text.AlignHCenter; color: "white"
+			text: "Deal"; color: "white"
+			anchors.centerIn: parent
 		}
 		MouseArea {
 			anchors.fill: parent;
 			onClicked: {
+				finishedScreen.visible = false;
 				playerModel.clear();
 				dealerModel.clear();
 				playerModel.append({ _id: "cardBack.jpg"});
