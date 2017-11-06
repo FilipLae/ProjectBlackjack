@@ -34,6 +34,29 @@ Rectangle {
 			font.bold: true
 			color: "black"
 		}
+		MouseArea {
+			id: dealerMove
+			onClicked: {
+				var x = (Math.floor(Math.random()*1000) % 2);
+				if ( x == 0 ){
+					if (dealerModel.count <= 9) {
+					var x = Math.floor(Math.random()*1000) % 4;
+                               		var y = (Math.floor(Math.random()*1000) % 13) + 1;
+
+                                	if (x == 0){
+                                        	dealerModel.append({ _id: "./Images/H" + y + ".png" })
+                                	} else if (x == 1){
+                                        	dealerModel.append({ _id: "./Images/S" + y + ".png" })
+                                	} else if (x == 2){
+                                        	dealerModel.append({ _id: "./Images/C" + y + ".png" })
+                                	} else {
+                                        	dealerModel.append({ _id: "./Images/D" + y + ".png" })
+                                	}
+					dealerMove.clicked(Qt.LeftButton)
+				}
+				}
+			}
+		}
 
 		ListModel {
 			id: dealerModel
@@ -73,8 +96,6 @@ Rectangle {
 		ListModel {
 			id: playerModel
 
-			//ListElement { _id: "cardBack.jpg" }
-			//ListElement { _id: "./Images/HA.png" }
 		}
 
 		Grid {
@@ -86,15 +107,13 @@ Rectangle {
 				delegate: Cardback {  buttonImage.source: _id }
 			}
 
-	//		Cardback { }
-	//		Cardback { }
-	//		Cardback { }
 		}
 	}
 	
 	//Button for HIT
 	Rectangle {
 	    	id: hit
+		visible: false
             	color: "green"; width: 50; height: 50;
             	radius: 3;
 		anchors.left: stay.right
@@ -128,6 +147,7 @@ Rectangle {
 	//Button for STAY
 	Rectangle {
 		id: stay
+		visible: false
             	color: "red"; width: 50; height: 50;
             	radius: 3;
 		anchors.left: player.left
@@ -142,7 +162,10 @@ Rectangle {
             	}
             	MouseArea {
                 	anchors.fill: parent;
-                	onClicked: playerMove(1);
+                	onClicked: { 	hit.visible = false;
+					stay.visible = false 
+					dealerMove.clicked(Qt.LeftButton)
+				   }//playerMove(1);
             	}
         }
 
@@ -186,6 +209,8 @@ Rectangle {
                                 } else {
                                 	dealerModel.append({ _id: "./Images/D" + b + ".png" })
                                 }
+				hit.visible = true;
+				stay.visible = true
 			}
 		}
 	}
