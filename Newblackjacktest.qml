@@ -23,6 +23,7 @@ Rectangle {
 		visible: false
 
 		Text {
+			id: output
 			text: "GAME FINISHED \n\n\nClick deal to start a new one!"
 			anchors.centerIn: parent
 			font.pointSize: 20
@@ -57,6 +58,8 @@ Rectangle {
 				var x = (Math.floor(Math.random()*1000) % 2);
 				if ( x == 0 ){
 					if (dealerModel.count <= 9) {
+						var z = dealCard (Math.floor (Math.random() * 129387192472416294738));
+					/*
 					var x = Math.floor(Math.random()*1000) % 4;
                                		var y = (Math.floor(Math.random()*1000) % 13) + 1;
 
@@ -69,9 +72,9 @@ Rectangle {
                                 	} else {
                                         	dealerModel.append({ _id: "./Images/D" + y + ".png" })
                                 	}
-
-				
-					dealerMove.clicked(Qt.LeftButton)
+					*/
+						dealerModel.append({ _id: "./Images/" + z + ".png" });
+						dealerMove.clicked(Qt.LeftButton)
 				}
 				}else{
 					finishedScreen.visible = true
@@ -151,16 +154,18 @@ Rectangle {
                 	onClicked: {
 				var x = Math.floor(Math.random()*1000) % 4;
                                 var y = (Math.floor(Math.random()*1000) % 13) + 1;
+				var z = dealCard (Math.floor (Math.random() * 129387192472416294738));
+				playerModel.append ({ _id: "./Images/" + qsTr(z) + ".png" });
 
-				if (x == 0){
-                                        playerModel.append({ _id: "./Images/H" + y + ".png" })
-                                } else if (x == 1){
-                                        playerModel.append({ _id: "./Images/S" + y + ".png" })
-                                } else if (x == 2){
-                                        playerModel.append({ _id: "./Images/C" + y + ".png" })
-                                } else {
-                                        playerModel.append({ _id: "./Images/D" + y + ".png" })
-                                }
+				//if (x == 0){
+                               //         playerModel.append({ _id: "./Images/H" + y + ".png" })
+                               // } else if (x == 1){
+                                 //       playerModel.append({ _id: "./Images/S" + y + ".png" })
+                                //} else if (x == 2){
+                                 //       playerModel.append({ _id: "./Images/C" + y + ".png" })
+                                //} else {
+                                 //       playerModel.append({ _id: "./Images/D" + y + ".png" })
+                                //}
 			}//playerMove(0);
             	}
         }
@@ -208,13 +213,17 @@ Rectangle {
 				finishedScreen.visible = false;
 				playerModel.clear();
 				dealerModel.clear();
+				var x = dealCard (Math.floor (Math.random() * 129387192472416294738));
+				var y = dealCard (Math.floor (Math.random() * 129387192472416294738));
 				playerModel.append({ _id: "cardBack.jpg"});
 				dealerModel.append({ _id: "cardBack.jpg"});
-				var x = Math.floor(Math.random()*1000) % 4;
+				playerModel.append({ _id: "./Images/" + x + ".png" });
+				dealerModel.append({ _id: "./Images/" + y + ".png" });
+				/*var x = 4;
 				var y = (Math.floor(Math.random()*1000) % 13) + 1;
 				var a = Math.floor(Math.random()*1000) % 4;
-				var b = (Math.floor(Math.random()*1000) % 13) + 1;
-				if (x == 0){
+				var b = (Math.floor(Math.random()*1000) % 13) + 1;*/
+				/*if (x == 0){
 					playerModel.append({ _id: "./Images/H" + y + ".png" })
 				} else if (x == 1){
 					playerModel.append({ _id: "./Images/S" + y + ".png" })
@@ -231,7 +240,7 @@ Rectangle {
                                 	dealerModel.append({ _id: "./Images/C" + b + ".png" })
                                 } else {
                                 	dealerModel.append({ _id: "./Images/D" + b + ".png" })
-                                }
+                                }*/
 				hit.visible = true;
 				stay.visible = true
 			}

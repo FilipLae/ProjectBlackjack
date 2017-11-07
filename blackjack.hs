@@ -2,6 +2,7 @@ import Graphics.QML
 import Data.Text (Text)
 import Data.Char
 import System.Random (randomRIO)
+import Control.Monad.Random
 import qualified Data.Text as T
 
 deck :: [String]
@@ -15,7 +16,13 @@ main = do
     clazz <- newClass [
         defMethod' "playerMove" (\_ txt ->
             let n = read $ T.unpack txt :: Integer
-            in displayPlayerMove n )]
+            in displayPlayerMove n ),
+        defMethod' "dealCard" (\_ txt ->
+            let n = read $ T.unpack txt :: Int
+            in return . T.pack . show $ dealCard n :: IO Text),
+        defMethod' "getCardValue" (\_ txt ->
+            let n = read $ T.unpack txt :: String
+            in return . T.pack . show $ getCardValue n :: IO Text)]
     ctx <- newObject clazz ()
     runEngineLoop defaultEngineConfig {
         initialDocument = fileDocument "mainScrene.qml",
@@ -37,5 +44,14 @@ getCardValue str =
         '1'     -> 10 -- Too lazy to handle 10 being two digits
         _       -> digitToInt card
 
-dealCard :: IO String
-dealCard = fmap (\index -> (deck !! index)) (randomRIO(0,length deck))
+dealCard :: Int -> String
+dealCard n = deck !! dealCard' n
+
+dealCard' :: Int -> Int
+dealCard' n = let g = mkStdGen n in evalRand (cfunc) g :: Int
+  
+
+cfunc = do
+  ret <- getRandomR (0,(length deck) - 1)
+  return ret
+
