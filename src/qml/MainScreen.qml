@@ -26,9 +26,9 @@ ApplicationWindow {
 	}
 
 	Button {
-		anchors.centerIn: parent
+		anchors.horizontalCenter: parent.horizontalCenter
+		y: 3 * (parent.height / 4)
 		text: qsTr("Start Game")
-
 		onClicked: {
 			var component = Qt.createComponent("blackjack.qml")
 			var window    = component.createObject(root)
