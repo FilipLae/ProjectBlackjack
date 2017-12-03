@@ -47,7 +47,8 @@ instance DefaultClass GameState where
     classMembers = [
          defPropertySigRO "dealer" (Proxy :: Proxy ListChanged) $ return . _dealHand . fromObjRef,
          defPropertySigRO "player" (Proxy :: Proxy ListChanged) $ return . _playHand . fromObjRef,
-         defMethod "finalScore" finalScore
+         defMethod "finalScore" finalScore,
+         defMethod "scoreDealerExternal" scoreDealerExternal
          ]
 
 --Default class for Dealer Hand
@@ -141,6 +142,9 @@ scoreDealer :: ObjRef ContextObj -> IO (Text)
 scoreDealer co = do lst <- readMVar . _list . fromObjRef $ co
                     score <- scoreHand lst
                     return . T.pack . show $ score
+
+scoreDealerExternal :: ObjRef GameState -> IO (Text)
+scoreDealerExternal co = scoreDealer (_dealHand . fromObjRef $ co)
 
 --Scores the player's hand- passes off to scoreHand
 scorePlayer :: ObjRef ContextObj2 -> IO (Text)

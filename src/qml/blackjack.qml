@@ -58,16 +58,25 @@ Rectangle {
 		MouseArea {
 			id: dealerMove
 			onClicked: {
-				var x = (Math.floor(Math.random()*1000) % 2);
+				var ds = scoreDealerExternal();
+				if (parseInt(ds) < 17) {
+					var z = (Math.floor (Math.random() * 12938));
+					dealer.appendList(z);
+					dealerMove.clicked(Qt.LeftButton)
+				} else {
+					dealer.flipFirst();
+					output.text = "Game Finished \n\n"+finalScore()+"\n\nPress deal to start a new one!"
+					finishedScreen.visible = true
+				}
+				/*var x = (Math.floor(Math.random()*1000) % 2);
 				if ( x == 0 ){
 					var z = (Math.floor (Math.random() * 12938));
 					dealer.appendList(z);
 					dealerMove.clicked(Qt.LeftButton)
 				}else{
-					dealer.flipFirst();
-					output.text = "Game Finished \n\n"+finalScore()+"\n\nPress deal to start a new one!"
-					finishedScreen.visible = true
+					
 				}
+				*/
 			}
 		}
 
