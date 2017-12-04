@@ -1,0 +1,23 @@
+name:                ProjectBlackjack
+version:             0.1.0.0
+synopsis:            A simple blackjack game
+-- description:         
+-- license:             
+license-file:        LICENSE
+author:              Pj Wise, Filip Laestadius
+maintainer:          pjameswise@gmail.com
+-- copyright:           
+category:            Game
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+executable ProjectBlackjack
+  main-is:             blackjack.hs
+  -- other-modules:       
+  -- other-extensions:    
+  build-depends:        base >=4.8 && <4.9,
+                        c2hs == 0.28.2,
+                        hsqml == 0.3.5.0
+  hs-source-dirs:      src
+  default-language:    Haskell2010
