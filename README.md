@@ -12,9 +12,11 @@ Progress:
 
 Installation: 
   1. Make sure you have GHC >= 7.4 and a c++ compiler
-  2. 'cabal install c2hs' - may need to run 'cabal install' on packages it complains it doesnt have
-  3. Install Qt >= 5.0
+  2. Install Qt >= 5.0
      On debian you may need to install qt5-make, qtdeclarative5-dev, qtquick1-5-dev, and qml-module-qtquick-controls
-  4. Run 'cabal install hsqml'
-  5. If all of the above were successful, then run 'ghc blackjack.hs' and run the executable it produces.
+  3. cd into root of project
+  4. 'cabal sandbox init'
+  5. 'cabal install --dependencies-only'
+  6. 'cabal build'
+  7. 'cabal run'
 

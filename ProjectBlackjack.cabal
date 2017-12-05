@@ -5,7 +5,7 @@ synopsis:            A simple blackjack game
 -- license:             
 license-file:        LICENSE
 author:              Pj Wise, Filip Laestadius
-maintainer:          pjameswise@gmail.com
+-- maintainer:       
 -- copyright:           
 category:            Game
 build-type:          Simple
@@ -17,7 +17,14 @@ executable ProjectBlackjack
   -- other-modules:       
   -- other-extensions:    
   build-depends:        base >=4.8 && <4.9,
-                        c2hs == 0.28.2,
-                        hsqml == 0.3.5.0
+                        hsqml,
+                        text,
+                        random,
+                        mtl,
+                        MonadRandom
   hs-source-dirs:      src
   default-language:    Haskell2010
+
+source-repository head
+    type:     git
+    location: https://github.com/FilipLae/ProjectBlackjack
