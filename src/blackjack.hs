@@ -175,17 +175,14 @@ flipFirst co = modifyMVar_ list (\ls -> do l <- transform $fromObjRef $head ls
     where list = _list . fromObjRef $ co
 
 --Appends a card to the Player's Hand
---Seeded with a value from QML javascript
 --Notifies QML that the list has changed
-appendList2 :: ObjRef ContextObj2 -> Int -> IO ()
-appendList2 co num = let dealtCard = deck !! num2 in
-                     let txt = foldr (++) "" ["../Images/",dealtCard,".png"] in
-                     modifyMVar_ list (\ls -> do l <- newObjectDC $ ListItem (T.pack txt) (T.pack dealtCard)
-                                                 --return (l:ls)) >>
-                                                 return (appendToEnd ls l)) >>
-                     fireSignal (Proxy :: Proxy ListChanged) co
+appendList2 :: ObjRef ContextObj2 -> IO ()
+appendList2 co = modifyMVar_ list (\ls -> do num2 <- randomRIO(0,51)
+                                             l <- newObjectDC $ ListItem (T.pack (foldr(++) "" ["../Images/",(deck !! (num2)),".png"])) (T.pack (deck !! num2))
+                                             --return (l:ls)) >>
+                                             return (appendToEnd ls l)) >>
+                 fireSignal (Proxy :: Proxy ListChanged) co
     where list = _list2 . fromObjRef $ co
-          num2 = head $ snd $ splitAt (num) $ evalState values $mkStdGen $ dealCard' (num*(num-1)*(num+30))
 
 --Default class instance for a Card
 instance DefaultClass ListItem where
@@ -195,26 +192,21 @@ instance DefaultClass ListItem where
          ]
 
 --Deals a card face down to the Dealer's hand
---Seeded from QML with a random number
 --Notifies QML that the list has changed
-appendFirst :: ObjRef ContextObj -> Int -> IO ()
-appendFirst co num = let dealtCard = deck !! num2 in
-                     modifyMVar_ list (\ls -> do l <- newObjectDC $ ListItem (T.pack "../Images/cardBack.jpg") (T.pack dealtCard)
-                                                 return (appendToEnd ls l)) >>
-                     fireSignal (Proxy :: Proxy ListChanged) co
+appendFirst :: ObjRef ContextObj -> IO ()
+appendFirst co = modifyMVar_ list (\ls -> do num2 <- randomRIO(0,51)
+                                             l <- newObjectDC $ ListItem (T.pack "../Images/cardBack.jpg") (T.pack (deck !! num2))
+                                             return (appendToEnd ls l)) >>
+                 fireSignal (Proxy :: Proxy ListChanged) co
     where list = _list . fromObjRef $ co
-          num2 = head $ snd $ splitAt (num) $ evalState values $mkStdGen $ dealCard' (num*(num-1)*(num+30))
 
 --Deals a card face up to the Dealer's hand
---Seeded from QML with a random number
-appendList :: ObjRef ContextObj -> Int -> IO ()
-appendList co num = let dealtCard = deck !! num2 in 
-                    let txt = foldr (++) "" ["../Images/",dealtCard,".png"] in
-                    modifyMVar_ list (\ls -> do l <- newObjectDC $ ListItem (T.pack txt) (T.pack dealtCard)
-                                                return (appendToEnd ls l)) >>
-                    fireSignal (Proxy :: Proxy ListChanged) co
+appendList :: ObjRef ContextObj -> IO ()
+appendList co = modifyMVar_ list (\ls -> do num2 <- randomRIO(0,51)
+                                            l <- newObjectDC $ ListItem (T.pack (foldr(++) "" ["../Images/",(deck !! (num2)),".png"])) (T.pack (deck !! num2))
+                                            return (appendToEnd ls l)) >>
+                fireSignal (Proxy :: Proxy ListChanged) co
     where list = _list . fromObjRef $ co
-          num2 = head $ snd $ splitAt (num) $ evalState values $mkStdGen $ dealCard' (num*(num-1)*(num+30))
 
 deck :: [String]
 deck = [    "C2" , "C3" , "C4" , "C5" , "C6" , "C7" , "C8" , "C9" , "C10" , "CJ" , "CQ" , "CK" , "CA",

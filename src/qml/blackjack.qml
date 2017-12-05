@@ -60,8 +60,7 @@ Rectangle {
 			onClicked: {
 				var ds = scoreDealerExternal();
 				if (parseInt(ds) < 17) {
-					var z = (Math.floor (Math.random() * 12938));
-					dealer.appendList(z);
+					dealer.appendList();
 					dealerMove.clicked(Qt.LeftButton)
 				} else {
 					dealer.flipFirst();
@@ -70,8 +69,7 @@ Rectangle {
 				}
 				/*var x = (Math.floor(Math.random()*1000) % 2);
 				if ( x == 0 ){
-					var z = (Math.floor (Math.random() * 12938));
-					dealer.appendList(z);
+					dealer.appendList();
 					dealerMove.clicked(Qt.LeftButton)
 				}else{
 					
@@ -145,8 +143,7 @@ Rectangle {
 		MouseArea {
 			anchors.fill: parent;
 			onClicked: {
-				var z = (Math.floor (Math.random() * 12938));
-				player.appendList2(z);
+				player.appendList2();
 			}
 		}
     }
@@ -210,14 +207,10 @@ Rectangle {
 				finishedScreen.visible = false;
 				player.clear();
 				dealer.clear();
-				var x = (Math.floor (Math.random() * 12938));
-				var y = (Math.floor (Math.random() * 12938));
-				var z = (Math.floor (Math.random() * 12938));
-				var w = (Math.floor (Math.random() * 12938));
-				player.appendList2(x);
-				dealer.appendFirst(z);
-				player.appendList2(y);
-				dealer.appendList(w);
+				player.appendList2();
+				dealer.appendFirst();
+				player.appendList2();
+				dealer.appendList();
 				hit.visible = true;
 				stay.visible = true;
 				pressToDeal.visible = false;
